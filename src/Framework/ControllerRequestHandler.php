@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace Framework;
+use Framework\Request;
+use Framework\Interfaces\RequestHandlerInterface;
 
 class ControllerRequestHandler implements RequestHandlerInterface {
 

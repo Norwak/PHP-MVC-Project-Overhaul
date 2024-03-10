@@ -1,5 +1,7 @@
 <?php
-namespace Framework;
+namespace Framework\Interfaces;
+use Framework\Request;
+use Framework\Response;
 
 interface RequestHandlerInterface {
 

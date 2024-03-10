@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Framework;
 use ReflectionMethod;
 use Framework\Exceptions\NotFoundException;
+use Framework\Interfaces\TemplateInterface;
 use UnexpectedValueException;
 
 class Dispatcher {

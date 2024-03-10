@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace Framework;
+use Framework\Interfaces\RequestHandlerInterface;
 
 class MiddlewareRequestHandler implements RequestHandlerInterface {
 

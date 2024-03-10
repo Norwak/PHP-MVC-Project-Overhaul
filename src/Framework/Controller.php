@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Framework;
 use Framework\Request;
 use Framework\Response;
+use Framework\Interfaces\TemplateInterface;
 use ReflectionClass;
 
 abstract class Controller {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Middleware;
 use Framework\Request;
 use Framework\Response;
-use Framework\RequestHandlerInterface;
+use Framework\Interfaces\RequestHandlerInterface;
 use Framework\MiddlewareInterface;
 
 class ChangeRequestExample implements MiddlewareInterface {
