@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
-namespace App\Controllers;
+namespace App\Modules\Products;
 use App\Models\Product;
 use Framework\Exceptions\NotFoundException;
 use Framework\Controller;
 use Framework\Response;
 
-class Products extends Controller {
+class ProductsController extends Controller {
 
   function __construct(
-    private Product $model,
+    private ProductsModel $model,
   ) {}
 
 
@@ -27,7 +27,7 @@ class Products extends Controller {
   function index(): Response {
     $products = $this->model->findAll();
 
-    return $this->view('Products/index.engine.php', [
+    return $this->view('index', [
       "products" => $products,
       "total" => $this->model->getTotal(),
     ]);
@@ -37,7 +37,7 @@ class Products extends Controller {
   function show(string $id): Response {
     $product = $this->getProduct($id);
 
-    return $this->view('Products/show.engine.php', [
+    return $this->view('show', [
       "product" => $product
     ]);
   }
@@ -45,11 +45,12 @@ class Products extends Controller {
 
   function showPage(string $title, string $id, string $page) {
     echo $title, " ", $id, " ", $page;
+    return $this->response;
   }
 
 
   function new(): Response {
-    return $this->view('Products/new.engine.php');
+    return $this->view('new');
   }
 
 
@@ -65,7 +66,7 @@ class Products extends Controller {
     if ($result) {
       return $this->redirect("/products/{$result['id']}/show");
     } else {
-      return $this->view('Products/new.engine.php', [
+      return $this->view('new', [
         "errors" => $this->model->getErrors(),
         "product" => $data,
       ]);
@@ -76,7 +77,7 @@ class Products extends Controller {
   function edit(string $id): Response {
     $product = $this->getProduct($id);
 
-    return $this->view('Products/edit.engine.php', [
+    return $this->view('edit', [
       "product" => $product
     ]);
   }
@@ -94,7 +95,7 @@ class Products extends Controller {
     } else {
       $product['id'] = $id;
   
-      return $this->view('Products/edit.engine.php', [
+      return $this->view('edit', [
         "errors" => $this->model->getErrors(),
         "product" => $product
       ]);
@@ -105,7 +106,7 @@ class Products extends Controller {
   function delete(string $id): Response {
     $product = $this->getProduct($id);
 
-    return $this->view('Products/delete.engine.php', [
+    return $this->view('delete', [
       "product" => $product
     ]);
   }

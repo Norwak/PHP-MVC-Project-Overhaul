@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Framework;
 use Framework\Request;
 use Framework\Response;
+use ReflectionClass;
 
 abstract class Controller {
 
@@ -12,6 +13,9 @@ abstract class Controller {
 
 
   protected function view(string $template, array $data = []): Response {
+    $child_controller_dirpath = dirname((new ReflectionClass(static::class))->getFileName());
+    $template = $child_controller_dirpath . '/views/' . $template . '.view.php';
+    
     $this->response->setBody($this->viewer->render($template, $data));
     return $this->response;
   }

@@ -29,14 +29,18 @@ class Dispatcher {
 
   private function getControllerName(array $params): string {
     $controllerName = $params['controller'];
+    
+    // turn "controller-name" into "ControllerName"
     $controllerName = str_replace('-', '', ucwords(strtolower($controllerName), '-'));
 
-    $namespace = 'App\Controllers';
+    $namespace = 'App\Modules\\' . $controllerName;
     if (array_key_exists('namespace', $params)) {
-      $namespace .= '\\' . $params['namespace'];
+      $controllerName = $namespace . '\\' . $params['namespace'] . 'Controller';
+    } else {
+      $controllerName = $namespace . '\\' . $controllerName . 'Controller';
     }
 
-    return $namespace . '\\' . $controllerName;
+    return $controllerName;
   }
 
 

@@ -1,4 +1,4 @@
-{% extends "base.engine.php" %}
+{% extends "Common/views/base.view.php" %}
 
 {% block title %}Delete Product{% endblock %}
 

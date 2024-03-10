@@ -31,7 +31,9 @@ abstract class Model {
     if ($this->table !== null) return $this->table;
 
     $parts = explode("\\", $this::class);
-    return strtolower(array_pop($parts));
+    $table_name = array_pop($parts);
+    $table_name = strtolower(preg_replace("/Model$/", '', $table_name));
+    return $table_name;
   }
 
 

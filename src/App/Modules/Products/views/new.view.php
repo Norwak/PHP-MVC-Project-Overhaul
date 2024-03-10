@@ -1,4 +1,4 @@
-{% extends "base.engine.php" %}
+{% extends "Common/views/base.view.php" %}
 
 {% block title %}New Product{% endblock %}
 
@@ -8,7 +8,7 @@
 
 <form method="POST" action="/products/create">
 
-  {% include "Products/form.engine.php" %}
+  {% include "Modules/Products/views/form.view.php" %}
 
 </form>
 

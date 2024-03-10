@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
-namespace App\Models;
+namespace App\Modules\Products;
 use Framework\Model;
 
-class Product extends Model {
+class ProductsModel extends Model {
 
   // protected $table = 'products';
 
@@ -18,7 +18,7 @@ class Product extends Model {
   function getTotal(): int {
     $pdo = $this->database->getConnection();
 
-    $sql = "SELECT COUNT(*) AS total FROM product";
+    $sql = "SELECT COUNT(*) AS total FROM products";
     $stmt = $pdo->query($sql);
 
     $row = $stmt->fetch();

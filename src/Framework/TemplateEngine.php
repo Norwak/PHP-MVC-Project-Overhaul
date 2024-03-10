@@ -48,18 +48,18 @@ class TemplateEngine implements TemplateInterface {
   }
 
 
-  function render(string $template, array $data = []): string {
-    $views_dir = dirname(__DIR__, 2) . "/views/";
+  function render(string $template_path, array $data = []): string {
+    $dir = dirname(__DIR__, 2) . "/src/App/";
 
-    $code = file_get_contents($views_dir . $template);
+    $code = file_get_contents($template_path);
 
     if (preg_match('#^{% extends "(?<template>.*)" %}#', $code, $matches)) {
-      $base = file_get_contents($views_dir . $matches['template']);
+      $base = file_get_contents($dir . $matches['template']);
       $blocks = $this->getBlocks($code);
       $code = $this->replaceYields($base, $blocks);
     }
 
-    $code = $this->loadIncludes($views_dir, $code);
+    $code = $this->loadIncludes($dir, $code);
     $code = $this->replaceVariables($code);
 
     extract($data, EXTR_SKIP);
