@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace App\Modules\Products;
-use Framework\Model;
+use Framework\Base\Model;
 
 class ProductsModel extends Model {
 

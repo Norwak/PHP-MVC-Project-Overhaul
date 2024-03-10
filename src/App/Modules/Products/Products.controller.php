@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\Modules\Products;
 use App\Models\Product;
 use Framework\Exceptions\NotFoundException;
-use Framework\Controller;
+use Framework\Base\Controller;
 use Framework\Response;
 
 class ProductsController extends Controller {

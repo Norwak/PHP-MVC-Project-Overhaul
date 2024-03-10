@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace Framework;
+namespace Framework\Base;
 use Framework\Request;
 use Framework\Response;
 use Framework\Interfaces\TemplateInterface;

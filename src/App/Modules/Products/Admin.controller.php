@@ -1,6 +1,6 @@
 <?php
 namespace App\Modules\Products;
-use Framework\Controller;
+use Framework\Base\Controller;
 
 class Admin extends Controller {
 

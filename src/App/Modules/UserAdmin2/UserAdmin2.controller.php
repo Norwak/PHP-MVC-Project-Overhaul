@@ -1,6 +1,6 @@
 <?php
 namespace App\Modules\UserAdmin2;
-use Framework\Controller;
+use Framework\Base\Controller;
 use Framework\Response;
 
 class UserAdmin2Controller extends Controller {

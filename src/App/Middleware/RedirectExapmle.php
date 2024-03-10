@@ -4,7 +4,7 @@ namespace App\Middleware;
 use Framework\Request;
 use Framework\Response;
 use Framework\Interfaces\RequestHandlerInterface;
-use Framework\MiddlewareInterface;
+use Framework\Interfaces\MiddlewareInterface;
 
 class RedirectExapmle implements MiddlewareInterface {
 
