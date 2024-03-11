@@ -13,19 +13,17 @@ abstract class Controller {
   protected TemplateInterface $viewer;
 
 
-  protected function view(string $template, array $data = []): Response {
+  protected function view(string $template, array $data = []): string {
     $child_controller_dirpath = dirname((new ReflectionClass(static::class))->getFileName());
     $template = $child_controller_dirpath . '/views/' . $template . '.view.php';
     
-    $body = $this->viewer->render($template, $data);
-    $this->response = new Response($body);
-    return $this->response;
+    return $this->viewer->render($template, $data);
   }
 
 
   protected function redirect(string $url): Response {
-    $this->response->redirect($url);
-    return $this->response;
+    header("Location: $url");
+    exit();
   }
 
 

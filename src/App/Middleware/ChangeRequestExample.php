@@ -9,13 +9,13 @@ use Framework\Interfaces\MiddlewareInterface;
 
 class ChangeRequestExample implements MiddlewareInterface {
 
-  function process(Request $request, RequestHandlerInterface $next): Response {
+  function process(Request $request, RequestHandlerInterface $next): string {
     // won't work because i made Request immutable
     // $request->post = array_map('trim', $request->post);
     
-    $response = $next->handle($request);
+    $body = $next->handle($request);
 
-    return $response;
+    return $body;
   }
 
 }

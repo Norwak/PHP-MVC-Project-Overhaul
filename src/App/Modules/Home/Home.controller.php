@@ -6,7 +6,7 @@ use Framework\Response;
 
 class HomeController extends Controller {
 
-  function index(): Response {
+  function index(): string {
     return $this->view('index');
   }
 

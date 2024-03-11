@@ -13,7 +13,7 @@ class RedirectExapmle implements MiddlewareInterface {
   ) {}
 
 
-  function process(Request $request, RequestHandlerInterface $next): Response {
+  function process(Request $request, RequestHandlerInterface $next): string {
     $this->response->redirect('/products/index');
     return $this->response;
   }

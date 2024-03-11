@@ -24,7 +24,7 @@ class ProductsController extends Controller {
   }
 
 
-  function index(): Response {
+  function index(): string {
     $products = $this->model->findAll();
 
     return $this->view('index', [
@@ -34,7 +34,7 @@ class ProductsController extends Controller {
   }
 
 
-  function show(string $id): Response {
+  function show(string $id): string {
     $product = $this->getProduct($id);
 
     return $this->view('show', [
@@ -43,18 +43,17 @@ class ProductsController extends Controller {
   }
 
 
-  function showPage(string $title, string $id, string $page) {
-    echo $title, " ", $id, " ", $page;
-    return $this->response;
+  function showPage(string $title, string $id, string $page): string {
+    return $title . " " . $id . " " . $page;
   }
 
 
-  function new(): Response {
+  function new(): string {
     return $this->view('new');
   }
 
 
-  function create(): Response { 
+  function create(): string { 
     $post = $this->request->post();
 
     $data = [
@@ -74,7 +73,7 @@ class ProductsController extends Controller {
   }
 
 
-  function edit(string $id): Response {
+  function edit(string $id): string {
     $product = $this->getProduct($id);
 
     return $this->view('edit', [
@@ -83,7 +82,7 @@ class ProductsController extends Controller {
   }
 
 
-  function update(string $id): Response {
+  function update(string $id): string {
     $post = $this->request->post();
 
     $product['name'] = $post['name'];
@@ -103,7 +102,7 @@ class ProductsController extends Controller {
   }
 
 
-  function delete(string $id): Response {
+  function delete(string $id): string {
     $product = $this->getProduct($id);
 
     return $this->view('delete', [
@@ -112,7 +111,7 @@ class ProductsController extends Controller {
   }
 
 
-  function remove(string $id): Response {
+  function remove(string $id): string {
     $product = $this->getProduct($id);
 
     $this->model->remove($id);

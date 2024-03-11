@@ -4,7 +4,7 @@ use Framework\Base\Controller;
 
 class Admin extends Controller {
 
-  function index() {
+  function index(): string {
     return $this->view('admin');
   }
 

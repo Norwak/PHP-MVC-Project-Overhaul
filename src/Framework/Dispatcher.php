@@ -91,7 +91,7 @@ class Dispatcher {
   }
 
 
-  function handle(Request $request): Response {
+  function handle(Request $request): string {
     $params = $this->getParamsFromRoute($this->routes, $request);
 
     $controllerName = $this->getControllerName($params);

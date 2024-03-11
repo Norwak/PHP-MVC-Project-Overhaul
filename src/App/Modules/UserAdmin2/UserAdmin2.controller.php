@@ -1,13 +1,11 @@
 <?php
 namespace App\Modules\UserAdmin2;
 use Framework\Base\Controller;
-use Framework\Response;
 
 class UserAdmin2Controller extends Controller {
 
-  function showList(): Response {
-    echo 'Hello from the showList method';
-    return $this->response;
+  function showList(): string {
+    return 'Hello from the showList method';
   }
 
 }
