@@ -5,8 +5,12 @@ namespace Framework;
 
 class Dotenv {
 
-  function load(string $path): void {
-    $lines = file($path, FILE_IGNORE_NEW_LINES);
+  function __construct(
+    private string $path,
+  ) {}
+
+  function load(): void {
+    $lines = file($this->path, FILE_IGNORE_NEW_LINES);
 
     foreach ($lines as $line) {
       list($name, $value) = explode("=", $line, 2);

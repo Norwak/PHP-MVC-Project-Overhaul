@@ -1,15 +1,16 @@
 <?php
 declare(strict_types=1);
 
-define('ROOT_PATH', dirname(__DIR__));
+define('ROOT_PATH', dirname(__DIR__, 1));
 
 spl_autoload_register(function(string $class_name) {
   $class_name = str_replace('\\', '/', $class_name);
   $class_name_arr = explode('/', $class_name);
+  $class_name_last = end($class_name_arr);
 
   $types = ['Controller', 'Model', 'View'];
   foreach ($types as $type) {
-    if (end($class_name_arr) !== $type && str_ends_with(end($class_name_arr), $type)) {
+    if ($class_name_last !== $type && str_ends_with($class_name_last, $type)) {
       $class_name = preg_replace("/$type$/", '', $class_name) . '.' . strtolower($type) . '.php';
     }
   }
@@ -21,8 +22,8 @@ spl_autoload_register(function(string $class_name) {
   require ROOT_PATH . "/src/$class_name";
 });
 
-$dotenv = new Framework\Dotenv();
-$dotenv->load(ROOT_PATH . '/.env');
+$dotenv = new Framework\Dotenv(ROOT_PATH . '/.env');
+$dotenv->load();
 
 set_error_handler('Framework\ErrorHandler::handleError');
 set_exception_handler('Framework\ErrorHandler::handleException');
