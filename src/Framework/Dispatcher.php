@@ -9,22 +9,27 @@ use UnexpectedValueException;
 class Dispatcher {
 
   function __construct(
-    private Router $router,
+    private array $routes,
     private Container $container,
     private array $middleware_classes
   ) {}
 
 
-  private function getActionArguments(string $controller, string $action, array $params): array {
-    $args = [];
+  private function getParamsFromRoute(array $routes, Request $request): array {
+    $path = $request->path();
+    $method = $request->method();
+    $params = [];
 
-    $method = new ReflectionMethod($controller, $action);
-    foreach ($method->getParameters() as $parameter) {
-      $name = $parameter->getName();
-      $args[$name] = $params[$name];
+    foreach ($routes as $route) {
+      $params = $route->match($path, $method);
+      if ($params) break;
+    }
+    if (!$params) {
+      http_response_code(404);
+      throw new NotFoundException("No route matched for '$path' with method '{$method}'");
     }
 
-    return $args;
+    return $params;
   }
 
 
@@ -53,6 +58,19 @@ class Dispatcher {
   }
 
 
+  private function getActionArguments(string $controller, string $action, array $params): array {
+    $args = [];
+
+    $method = new ReflectionMethod($controller, $action);
+    foreach ($method->getParameters() as $parameter) {
+      $name = $parameter->getName();
+      $args[$name] = $params[$name];
+    }
+
+    return $args;
+  }
+
+
   private function getMiddleware(array $params): array {
     if (!array_key_exists("middleware", $params)) {
       return [];
@@ -72,14 +90,7 @@ class Dispatcher {
 
 
   function handle(Request $request): Response {
-    $path = $request->path();
-    $method = $request->method();
-
-    $params = $this->router->match($path, $method);
-    if (!$params) {
-      http_response_code(404);
-      throw new NotFoundException("No route matched for '$path' with method '{$method}'");
-    }
+    $params = $this->getParamsFromRoute($this->routes, $request);
 
     $controllerName = $this->getControllerName($params);
     $controller = $this->container->get($controllerName);

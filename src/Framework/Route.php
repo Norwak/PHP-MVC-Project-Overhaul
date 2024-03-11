@@ -2,9 +2,17 @@
 declare(strict_types=1);
 namespace Framework;
 
-class Router {
+class Route {
 
-  private array $routes;
+  private string $pattern;
+  private array $params;
+
+
+  function __construct(string $route_path, array $params = []) {
+    $this->pattern = $this->getPatternFromRoutePath($route_path);
+    $this->params = $params;
+  }
+
 
   private function getPatternFromRoutePath(string $route_path): string {
     $route_path = trim($route_path, '/');
@@ -24,33 +32,21 @@ class Router {
 
     return '#^' . implode('/', $segments) . '$#iu';
   }
-
-  function add(string $path, array $params = []): void {
-    $this->routes[] = [
-      "path" => $path,
-      "params" => $params,
-    ];
-  }
+  
 
   function match(string $path, string $method): array {
     $path = urldecode($path);
     $path = trim($path, '/');
 
-    foreach ($this->routes as $route) {
-      $pattern = $this->getPatternFromRoutePath($route['path']);
+    if (!preg_match($this->pattern, $path, $matches)) return [];
 
-      if (preg_match($pattern, $path, $matches)) {
-        $matches = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
-        $params = array_merge($matches, $route['params']);
+    $matches = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+    $params = array_merge($matches, $this->params);
 
-        if (array_key_exists("method", $params)) {
-          if (strtolower($method) !== strtolower($params['method'])) continue;
-        }
-
-        return $params;
-      };
+    if (array_key_exists("method", $params)) {
+      if (strtolower($method) !== strtolower($params['method'])) return [];
     }
-    
-    return [];
+
+    return $params;
   }
 }
