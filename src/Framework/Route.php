@@ -4,14 +4,10 @@ namespace Framework;
 
 class Route {
 
-  private string $pattern;
-  private array $params;
-
-
-  function __construct(string $route_path, array $params = []) {
-    $this->pattern = $this->getPatternFromRoutePath($route_path);
-    $this->params = $params;
-  }
+  function __construct(
+    private string $path,
+    private array $params = [],
+  ) {}
 
 
   private function getPatternFromRoutePath(string $route_path): string {
@@ -34,11 +30,12 @@ class Route {
   }
   
 
-  function match(string $path, string $method): array {
+  function matches(string $path, string $method): array {
     $path = urldecode($path);
     $path = trim($path, '/');
 
-    if (!preg_match($this->pattern, $path, $matches)) return [];
+    $pattern = $this->getPatternFromRoutePath($this->path);
+    if (!preg_match($pattern, $path, $matches)) return [];
 
     $matches = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
     $params = array_merge($matches, $this->params);
@@ -48,5 +45,10 @@ class Route {
     }
 
     return $params;
+  }
+  
+
+  function params(): array {
+    return $this->params;
   }
 }

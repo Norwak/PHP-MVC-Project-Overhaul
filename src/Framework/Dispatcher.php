@@ -21,8 +21,10 @@ class Dispatcher {
     $params = [];
 
     foreach ($routes as $route) {
-      $params = $route->match($path, $method);
-      if ($params) break;
+      if ($route->matches($path, $method)) {
+        $params = $route->params();
+        break;
+      };
     }
     if (!$params) {
       http_response_code(404);
