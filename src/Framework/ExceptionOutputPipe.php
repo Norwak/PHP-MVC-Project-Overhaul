@@ -5,14 +5,14 @@ use ErrorException;
 use Throwable;
 use Framework\Exceptions\NotFoundException;
 
-class ErrorHandler {
+class ExceptionOutputPipe {
 
-  static function handleError(int $errno, string $errstr, string $errfile, int $errline): bool {
+  function convertErrorToException(int $errno, string $errstr, string $errfile, int $errline): bool {
     throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
   }
 
 
-  static function handleException(Throwable $exception): void {
+  function showException(Throwable $exception): void {
 
     if ($exception instanceof NotFoundException) {
       http_response_code(404);
@@ -29,7 +29,7 @@ class ErrorHandler {
     } else {
       ini_set('display_errors', '0');
       ini_set('log_errors', '1');
-      require dirname(__DIR__, 2) . "/views/$template";
+      require dirname(__DIR__, 1) . "/App/Common/views/$template";
     }
   
     throw $exception;

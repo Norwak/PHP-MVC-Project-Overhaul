@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
-
 define('ROOT_PATH', dirname(__DIR__, 1));
+
+
 
 spl_autoload_register(function(string $class_name) {
   $class_name = str_replace('\\', '/', $class_name);
@@ -22,11 +23,16 @@ spl_autoload_register(function(string $class_name) {
   require ROOT_PATH . "/src/$class_name";
 });
 
+
+
 $dotenv = new Framework\Dotenv(ROOT_PATH . '/.env');
 $dotenv->load();
 
-set_error_handler('Framework\ErrorHandler::handleError');
-set_exception_handler('Framework\ErrorHandler::handleException');
+
+
+$exception_output_pipe = new Framework\ExceptionOutputPipe();
+set_error_handler([$exception_output_pipe, 'convertErrorToException']);
+set_exception_handler([$exception_output_pipe, 'showException']);
 
 
 
