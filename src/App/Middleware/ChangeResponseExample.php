@@ -9,12 +9,12 @@ use Framework\Interfaces\MiddlewareInterface;
 
 class ChangeResponseExample implements MiddlewareInterface {
 
-  function process(Request $request, RequestHandlerInterface $next): string {
-    $body = $next->handle($request);
+  function process(Request $request, RequestHandlerInterface $next): array {
+    $response_args = $next->handle($request);
 
-    $body .= " hello from the middleware";
+    $response_args['body'] .= " hello from the middleware";
 
-    return $body;
+    return $response_args;
   }
 
 }

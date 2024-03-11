@@ -5,6 +5,6 @@ use Framework\Response;
 
 interface RequestHandlerInterface {
 
-  function handle(Request $request): string;
+  function handle(Request $request): array;
 
 }

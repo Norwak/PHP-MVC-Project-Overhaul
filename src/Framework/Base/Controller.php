@@ -2,43 +2,45 @@
 declare(strict_types=1);
 namespace Framework\Base;
 use Framework\Request;
-use Framework\Response;
 use Framework\Interfaces\TemplateInterface;
 use ReflectionClass;
 
 abstract class Controller {
 
-  protected Request $request;
-  protected Response $response;
-  protected TemplateInterface $viewer;
+  function __construct(
+    protected Request $request,
+    protected TemplateInterface $viewer,
+  ) {}
 
 
-  protected function view(string $template, array $data = []): string {
-    $child_controller_dirpath = dirname((new ReflectionClass(static::class))->getFileName());
+  protected function loadView(string $template, array $data = []): array {
+    $child_controller_dirpath = dirname((new ReflectionClass($this::class))->getFileName());
     $template = $child_controller_dirpath . '/views/' . $template . '.view.php';
     
-    return $this->viewer->render($template, $data);
+    $body = $this->viewer->render($template, $data); 
+    return [
+      'body' => $body
+    ];
   }
 
 
-  protected function redirect(string $url): Response {
-    header("Location: $url");
-    exit();
+  protected function showHTML(string $HTML): array {
+    $body = $HTML; 
+    return [
+      'body' => $body
+    ];
   }
 
 
-  function setRequest(Request $request): void {
-    $this->request = $request;
-  }
-
-
-  function setResponse(Response $response): void {
-    $this->response = $response;
-  }
-
-
-  function setViewer(TemplateInterface $viewer): void {
-    $this->viewer = $viewer;
+  protected function redirect(string $url): array {
+    $body = '';
+    $headers = ["Location: $url"];
+    $status = 301;
+    return [
+      'body' => $body,
+      'headers' => $headers,
+      'status_code' => $status
+    ];
   }
 
 }

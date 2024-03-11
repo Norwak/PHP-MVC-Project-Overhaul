@@ -6,8 +6,8 @@ use Framework\Response;
 
 class HomeController extends Controller {
 
-  function index(): string {
-    return $this->view('index');
+  function index(): array {
+    return $this->loadView('index');
   }
 
 }

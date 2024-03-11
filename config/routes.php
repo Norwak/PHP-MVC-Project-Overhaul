@@ -17,6 +17,7 @@ return $routes = [
   new Route('/{controller}/{id:\d+}/show', [
     "action" => "show",
     "middleware" => "message|message",
+    "method" => "get"
   ]),
   new Route('/{controller}/{id:\d+}/edit', [
     "action" => "edit",

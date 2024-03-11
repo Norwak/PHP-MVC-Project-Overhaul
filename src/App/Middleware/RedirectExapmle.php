@@ -8,14 +8,15 @@ use Framework\Interfaces\MiddlewareInterface;
 
 class RedirectExapmle implements MiddlewareInterface {
 
-  function __construct(
-    private Response $response
-  ) {}
-
-
-  function process(Request $request, RequestHandlerInterface $next): string {
-    $this->response->redirect('/products/index');
-    return $this->response;
+  function process(Request $request, RequestHandlerInterface $next): array {
+    $body = '';
+    $headers = ['Location: /products/index'];
+    $status = 301;
+    return [
+      'body' => $body,
+      'headers' => $headers,
+      'status_code' => $status,
+    ];
   }
 
 }

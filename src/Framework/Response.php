@@ -11,12 +11,6 @@ class Response {
   ) {}
 
 
-  function redirect(string $url): void {
-    $this->headers = ["Location: $url"];
-    $this->status_code = 301;
-  }
-
-
   function send(): void {
     if ($this->status_code) {
       http_response_code($this->status_code);

@@ -13,9 +13,7 @@ class ControllerRequestHandler implements RequestHandlerInterface {
     private array $args,
   ) {}
 
-  function handle(Request $request): string {
-    $this->controller->setRequest($request);
-    
+  function handle(Request $request): array {
     return ($this->controller)->{$this->action}(...$this->args);
   }
 

@@ -91,12 +91,11 @@ class Dispatcher {
   }
 
 
-  function handle(Request $request): string {
+  function handle(Request $request): array {
     $params = $this->getParamsFromRoute($this->routes, $request);
 
     $controllerName = $this->getControllerName($params);
     $controller = $this->dependency_registry->getOrResolve($controllerName);
-    $controller->setViewer($this->dependency_registry->getOrResolve(TemplateInterface::class));
 
     $action = $this->getActionName($params);
     $args = $this->getActionArguments($controllerName, $action, $params);

@@ -40,11 +40,10 @@ $routes = require ROOT_PATH . '/config/routes.php';
 $dependency_registry = require ROOT_PATH . '/config/services.php';
 $middleware = require ROOT_PATH . '/config/middleware.php';
 
-$uri = $_SERVER['REQUEST_URI'];
-$method = $_SERVER['REQUEST_METHOD'];
-$request = new Framework\Request($uri, $method, $_GET, $_POST, $_FILES, $_COOKIE, $_SERVER);
+$request = $dependency_registry->getOrResolve(Framework\Request::class);
 
 $dispatcher = new Framework\Dispatcher($routes, $dependency_registry, $middleware);
-$body = $dispatcher->handle($request);
-$response = new Framework\Response($body);
+$response_args = $dispatcher->handle($request);
+
+$response = new Framework\Response(...$response_args);
 $response->send();
