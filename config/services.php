@@ -1,17 +1,17 @@
 <?php
+use App\Database;
+use Framework\Interfaces\TemplateInterface;
 
-$container = new Framework\Container();
+return new Framework\DependencyRegistry([
+  Database::class => function() {
+    $host = $_ENV['DB_HOST'];
+    $db = $_ENV['DB_NAME'];
+    $user = $_ENV['DB_USER'];
+    $password = $_ENV['DB_PASS'];
+    return new Database($host, $db, $user, $password);
+  },
 
-$container->set(App\Database::class, function() {
-  $host = $_ENV['DB_HOST'];
-  $db = $_ENV['DB_NAME'];
-  $user = $_ENV['DB_USER'];
-  $password = $_ENV['DB_PASS'];
-  return new App\Database($host, $db, $user, $password);
-});
-
-$container->set(Framework\Interfaces\TemplateInterface::class, function() {
-  return new Framework\TemplateEngine();
-});
-
-return $container;
+  TemplateInterface::class => function() {
+    return new Framework\TemplateEngine();
+  }
+]);

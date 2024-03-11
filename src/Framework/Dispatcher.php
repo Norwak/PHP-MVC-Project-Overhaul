@@ -10,7 +10,7 @@ class Dispatcher {
 
   function __construct(
     private array $routes,
-    private Container $container,
+    private DependencyRegistry $dependency_registry,
     private array $middleware_classes
   ) {}
 
@@ -85,7 +85,7 @@ class Dispatcher {
         throw new UnexpectedValueException("Middleware '$value' not found in config settings");
       }
 
-      $value = $this->container->get($this->middleware_classes[$value]);
+      $value = $this->dependency_registry->getOrResolve($this->middleware_classes[$value]);
     });
     return $middleware;
   }
@@ -95,9 +95,9 @@ class Dispatcher {
     $params = $this->getParamsFromRoute($this->routes, $request);
 
     $controllerName = $this->getControllerName($params);
-    $controller = $this->container->get($controllerName);
-    $controller->setResponse($this->container->get(Response::class));
-    $controller->setViewer($this->container->get(TemplateInterface::class));
+    $controller = $this->dependency_registry->getOrResolve($controllerName);
+    $controller->setResponse($this->dependency_registry->getOrResolve(Response::class));
+    $controller->setViewer($this->dependency_registry->getOrResolve(TemplateInterface::class));
 
     $action = $this->getActionName($params);
     $args = $this->getActionArguments($controllerName, $action, $params);

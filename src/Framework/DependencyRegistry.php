@@ -6,12 +6,14 @@ use Closure;
 use ReflectionNamedType;
 use InvalidArgument;
 
-class Container {
+class DependencyRegistry {
 
-  private array $registry = [];
+  function __construct(
+    private array $registry = [],
+  ) {}
 
 
-  function get(string $class_name): object {
+  function getOrResolve(string $class_name): object {
     if (array_key_exists($class_name, $this->registry)) {
       return $this->registry[$class_name]();
     }
@@ -38,15 +40,10 @@ class Container {
         throw new Exception("Unable to resolve constructor parameter '{$parameter->getName()}' of type '$type' in the '$class_name' class");
       }
 
-      $dependencies[] = $this->get((string) $type);
+      $dependencies[] = $this->getOrResolve((string) $type);
     }
 
     return new $class_name(...$dependencies);
-  }
-
-
-  function set(string $name, Closure $value): void {
-    $this->registry[$name] = $value;
   }
 
 }
