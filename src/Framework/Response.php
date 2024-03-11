@@ -4,33 +4,16 @@ namespace Framework;
 
 class Response {
 
-  private string $body = '';
-  private array $headers = [];
-  private int $status_code = 0;
-
-
-  function getBody(): string {
-    return $this->body;
-  }
-
-
-  function setBody(string $body): void {
-    $this->body = $body;
-  }
-
-
-  function addHeader(string $header): void {
-    $this->headers[] = $header;
-  }
-
-
-  function setStatus(int $status_code): void {
-    $this->status_code = $status_code;
-  }
+  function __construct(
+    private string $body = '',
+    private array $headers = [],
+    private int $status_code = 200,
+  ) {}
 
 
   function redirect(string $url): void {
-    $this->addHeader("Location: $url");
+    $this->headers = ["Location: $url"];
+    $this->status_code = 301;
   }
 
 

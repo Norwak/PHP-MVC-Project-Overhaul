@@ -17,7 +17,8 @@ abstract class Controller {
     $child_controller_dirpath = dirname((new ReflectionClass(static::class))->getFileName());
     $template = $child_controller_dirpath . '/views/' . $template . '.view.php';
     
-    $this->response->setBody($this->viewer->render($template, $data));
+    $body = $this->viewer->render($template, $data);
+    $this->response = new Response($body);
     return $this->response;
   }
 

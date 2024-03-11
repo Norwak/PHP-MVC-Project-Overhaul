@@ -96,7 +96,6 @@ class Dispatcher {
 
     $controllerName = $this->getControllerName($params);
     $controller = $this->dependency_registry->getOrResolve($controllerName);
-    $controller->setResponse($this->dependency_registry->getOrResolve(Response::class));
     $controller->setViewer($this->dependency_registry->getOrResolve(TemplateInterface::class));
 
     $action = $this->getActionName($params);
