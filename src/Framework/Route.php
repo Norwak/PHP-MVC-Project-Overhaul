@@ -30,21 +30,22 @@ class Route {
   }
   
 
-  function matches(string $path, string $method): array {
+  function matches(string $path, string $method): bool {
     $path = urldecode($path);
     $path = trim($path, '/');
 
     $pattern = $this->getPatternFromRoutePath($this->path);
-    if (!preg_match($pattern, $path, $matches)) return [];
-
+    if (!preg_match($pattern, $path, $matches)) return false;
+    
     $matches = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
     $params = array_merge($matches, $this->params);
+    $this->params = $params;
 
     if (array_key_exists("method", $params)) {
-      if (strtolower($method) !== strtolower($params['method'])) return [];
+      if (strtolower($method) !== strtolower($params['method'])) return false;
     }
 
-    return $params;
+    return true;
   }
   
 
