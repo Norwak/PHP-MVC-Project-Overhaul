@@ -25,25 +25,5 @@ spl_autoload_register(function(string $class_name) {
 
 
 
-$dotenv = new Framework\Dotenv(ROOT_PATH . '/.env');
-$dotenv->load();
-
-
-
-$exception_output_pipe = new Framework\ExceptionOutputPipe();
-set_error_handler([$exception_output_pipe, 'convertErrorToException']);
-set_exception_handler([$exception_output_pipe, 'showException']);
-
-
-
-$routes = require ROOT_PATH . '/config/routes.php';
-$dependency_registry = require ROOT_PATH . '/config/services.php';
-$middleware = require ROOT_PATH . '/config/middleware.php';
-
-$request = $dependency_registry->getOrResolve(Framework\Request::class);
-
-$dispatcher = new Framework\Dispatcher($routes, $dependency_registry, $middleware);
-$response_args = $dispatcher->handle($request);
-
-$response = new Framework\Response(...$response_args);
-$response->send();
+$core = new Framework\Core();
+$core->start();

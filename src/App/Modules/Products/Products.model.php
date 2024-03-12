@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Modules\Products;
 use Framework\Base\Model;
+use Framework\Exceptions\NotFoundException;
 
 class ProductsModel extends Model {
 

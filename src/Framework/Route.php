@@ -30,7 +30,10 @@ class Route {
   }
   
 
-  function matches(string $path, string $method): bool {
+  function matches(Request $request): bool {
+    $path = $request->path();
+    $method = $request->method();
+    
     $path = urldecode($path);
     $path = trim($path, '/');
 

@@ -6,13 +6,13 @@ use Framework\Interfaces\RequestWrapInterface;
 class MiddlewareRequestWrap implements RequestWrapInterface {
 
   function __construct(
-    private array $middlewares,
+    private array $middleware,
     private ControllerRequestWrap $controller_handler,
   ) {}
 
 
   function handle(Request $request): array {
-    $middleware = array_shift($this->middlewares);
+    $middleware = array_shift($this->middleware);
     if ($middleware === null) {
       return $this->controller_handler->handle($request);
     }
