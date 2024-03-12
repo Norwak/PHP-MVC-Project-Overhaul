@@ -25,4 +25,15 @@ class ProductsModel extends Model {
     return (int) $row['total'];
   }
 
+
+  function getProduct(string $id): array {
+    $product = $this->find($id);
+
+    if (!$product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    return $product;
+  }
+
 }

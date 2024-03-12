@@ -18,17 +18,6 @@ class ProductsController extends Controller {
   }
 
 
-  private function getProduct(string $id): array {
-    $product = $this->model->find($id);
-
-    if (!$product) {
-      throw new NotFoundException('Product not found');
-    }
-
-    return $product;
-  }
-
-
   function index(): array {
     $products = $this->model->findAll();
 
@@ -41,7 +30,7 @@ class ProductsController extends Controller {
 
   function show(string $id): array {
     $get = $this->request->get();
-    $product = $this->getProduct($id);
+    $product = $this->model->getProduct($id);
 
     return $this->loadView('show', [
       "product" => $product
@@ -80,7 +69,7 @@ class ProductsController extends Controller {
 
 
   function edit(string $id): array {
-    $product = $this->getProduct($id);
+    $product = $this->model->getProduct($id);
 
     return $this->loadView('edit', [
       "product" => $product
@@ -109,7 +98,7 @@ class ProductsController extends Controller {
 
 
   function delete(string $id): array {
-    $product = $this->getProduct($id);
+    $product = $this->model->getProduct($id);
 
     return $this->loadView('delete', [
       "product" => $product
@@ -118,7 +107,7 @@ class ProductsController extends Controller {
 
 
   function remove(string $id): array {
-    $product = $this->getProduct($id);
+    $product = $this->model->getProduct($id);
 
     $this->model->remove($id);
     return $this->redirect('/products');
