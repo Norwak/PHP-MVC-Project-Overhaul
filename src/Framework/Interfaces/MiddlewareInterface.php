@@ -5,6 +5,6 @@ use Framework\Response;
 
 interface MiddlewareInterface {
 
-  function process(Request $request, RequestHandlerInterface $next): array;
+  function process(Request $request, RequestWrapInterface $next): array;
 
 }

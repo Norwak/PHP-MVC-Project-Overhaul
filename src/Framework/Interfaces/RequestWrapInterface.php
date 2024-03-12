@@ -3,7 +3,7 @@ namespace Framework\Interfaces;
 use Framework\Request;
 use Framework\Response;
 
-interface RequestHandlerInterface {
+interface RequestWrapInterface {
 
   function handle(Request $request): array;
 

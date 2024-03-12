@@ -100,11 +100,11 @@ class Dispatcher {
     $action = $this->getActionName($params);
     $args = $this->getActionArguments($controllerName, $action, $params);
     
-    $controller_handler = new ControllerRequestHandler($controller, $action, $args);
+    $controller_handler = new ControllerRequestWrap($controller, $action, $args);
 
     $middleware = $this->getMiddleware($params);
 
-    $middleware_handler = new MiddlewareRequestHandler($middleware, $controller_handler);
+    $middleware_handler = new MiddlewareRequestWrap($middleware, $controller_handler);
     return $middleware_handler->handle($request);
   }
 

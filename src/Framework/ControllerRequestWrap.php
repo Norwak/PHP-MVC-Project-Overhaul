@@ -2,10 +2,10 @@
 declare(strict_types=1);
 namespace Framework;
 use Framework\Request;
-use Framework\Interfaces\RequestHandlerInterface;
+use Framework\Interfaces\RequestWrapInterface;
 use Framework\Base\Controller;
 
-class ControllerRequestHandler implements RequestHandlerInterface {
+class ControllerRequestWrap implements RequestWrapInterface {
 
   function __construct(
     private Controller $controller,

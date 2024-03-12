@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 namespace Framework;
-use Framework\Interfaces\RequestHandlerInterface;
+use Framework\Interfaces\RequestWrapInterface;
 
-class MiddlewareRequestHandler implements RequestHandlerInterface {
+class MiddlewareRequestWrap implements RequestWrapInterface {
 
   function __construct(
     private array $middlewares,
-    private ControllerRequestHandler $controller_handler,
+    private ControllerRequestWrap $controller_handler,
   ) {}
 
 
